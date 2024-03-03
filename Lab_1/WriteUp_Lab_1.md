@@ -7,7 +7,7 @@
 
 2. Составление словаря паролей на пользователя. Имеется 10 слов, необходимо составить список паролей в которых используется 5 слов в разном порядке
 
-> Можно использовать утилиты crunch, combinanor.bin, написать свой скрипт, [взять чужой](https://github.com/Bitwise-01/Passwords/tree/master) или собрать словарь руками :)
+> Можно использовать утилиты crunch, combinanor.bin, написать свой скрипт, взять чужой [1](https://github.com/Bitwise-01/Passwords/tree/master), [2](https://github.com/cycurity/wister) или собрать словарь руками :)
 > 
 > Пример `crunch 1 1 -p Alex Company Position`
 > 
