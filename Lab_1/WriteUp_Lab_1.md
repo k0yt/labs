@@ -14,3 +14,8 @@
 > ![image](https://github.com/k0yt/labs/assets/114695070/037c7bc9-f212-4e8a-9e11-924307c55182)
 
 3. Отчет должен содержать название уязвимости, cvss вектор, описание уязвимости, пример её эксплуатации, рекомендации к устранению
+
+#### Attack Type	Description:
+- Brute Force	- Testing multiple passwords from a dictionary or other source against a single account.
+- Credential Stuffing	- Testing username/password pairs obtained from the breach of another site.
+- Password Spraying	- Testing a single weak password against a large number of different accounts.
