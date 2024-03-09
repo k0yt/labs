@@ -42,7 +42,7 @@
   <details>
   <summary>Шутка про антенны</summary>
 
-    ![](antenna.jpeg)
+  ![](antenna.jpeg)
   </details>
 
 3. Перевод Wi-Fi адаптера в режим монитора
