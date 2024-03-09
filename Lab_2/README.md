@@ -30,6 +30,8 @@
 
 ![](4wayshandshake.png)
 
+
+
 #### Каналы
 
 ![](wifiexplorer.png)
@@ -69,7 +71,7 @@ https://attack.mitre.org/techniques/T0860/
 
 Точка доступа WiFi может быть уязвима к **атакам на пользователя** и к **атакам без его участия**. Вот несколько примеров уязвимостей и соответствующих атак:
 
-**Атаки на пользователя** - 
+**Атаки на пользователя**
 
 - Атаки на пользователя:
 	1. Перехват трафика: Злоумышленник может использовать инструменты, такие как "отравление кеша ARP" или "перехват пакетов", для перехвата и анализа сетевого трафика, передаваемого через беспроводную точку доступа.
@@ -119,11 +121,25 @@ WEP, TKIP, CCMP, silentbridge, fenrir
 ### Примеры инструментов (Examples of tools)
 
 Тактика может быть исполнена на ОС linux с использованием сетевой карты поддерживающей режим монитора и дополнительных утилит:
-- Wireshark
-- Aircrack-ng
-- wifite 
-- bettercap
-- scapy
+
+
+- Manual:
+  - [Bettercap]()
+  - [Scapy]()
+  - [Wireshark]()
+  - [Airmon/Airodump/Aireplay/Aircrack-ng]()
+  - [tshark](https://www.wireshark.org/docs/man-pages/tshark.html): For detecting WPS networks and inspecting handshake capture files.
+  - [reaver](https://github.com/t6x/reaver-wps-fork-t6x): For WPS Pixie-Dust & brute-force attacks.
+  - [bully](): For WPS Pixie-Dust & brute-force attacks.
+  - [coWPAtty](): For detecting handshake captures.
+  - [pyrit](): For detecting handshake captures.
+  - [hashcat](): For cracking PMKID hashes.
+- Combines:
+  - [Wifite2](https://github.com/derv82/wifite2)  
+  - [Airgeddon](https://github.com/v1s1t0r1sh3r3/airgeddon)
+  - [WiFi-autopwner](https://github.com/Mi-Al/WiFi-autopwner)
+- Only EvilTwin attacks:
+  - [EapHammer](https://github.com/s0lst1c3/eaphammer)
 
 ### Пример WPS - атака на аутентификацию точки доступа
 
@@ -172,9 +188,7 @@ https://github.com/duyetdev/bruteforce-database/blob/master/1000000-password-sec
 https://github.com/derv82/wifite2
 https://www.freebuf.com/articles/wireless/338334.html
 https://wifigid.ru/besprovodnye-tehnologii/tehnologiya-802-11n-wi-fi-4-tsaritsa-wi-fi
-https://github.com/Mi-Al/WiFi-autopwner
-https://github.com/drygdryg/OneShot
-https://github.com/s0lst1c3/eaphammer
+
 https://raw.githubusercontent.com/koutto/pi-pwnbox-rogueap/main/mindmap/WiFi-Hacking-MindMap-v1.png
 https://github.com/ivan-sincek/wifi-penetration-testing-cheat-sheet
 
@@ -195,7 +209,8 @@ https://github.com/ivan-sincek/wifi-penetration-testing-cheat-sheet
 
 # Задание
 
-1. Проанализировать функционал приложения с точки зрения обычного пользователя и выделить разрешенные и запрещенные для него действия.
-2. Провести поиск `уязвимостей` контроля доступа для запрещенного функционала: попробовать выполнить запрещенное действие, изучить механизм контроля доступа к функциям. Обнаружение возможности выполнения неправомерных действий будет говорить о наличии `уязвимости` контроля доступа.
+1. Скачать архив с дампами трафика в формате pcap.
+2. Провести анализ дампов и найти подходящий для атаки `bruteforce WPA handshake по словарю` из найденных в открытых источника данных о сотрудниках.
+3. Дополнить отчет, где указать использованные подходы и затронутые угрозы безопасности. Отчет должен содержать название уязвимости, [cvss вектор](https://www.first.org/cvss/calculator/4.0), описание уязвимости, пример её эксплуатации, рекомендации к устранению. Указать найденный пароль. 
 
 # Теоретические вопросы
