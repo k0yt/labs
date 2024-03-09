@@ -71,6 +71,20 @@ https://attack.mitre.org/techniques/T0860/
     		- фейк точка доступа
     		- понижение защиты точки доступа
 
+Обход аутентификации WLAN – Общий ключ, фильтрация MAC, скрытые SSID
+Взлом шифрования WLAN – WEP, WPA/WPA2 для личных и корпоративных пользователей, понимание уязвимостей на основе шифрования (WEP, TKIP, CCMP)
+Атака на инфраструктуру WLAN - Устройства–мошенники, Злые близнецы, DoS-атаки, MITM, настройка защиты Wi-Fi
+Продвинутые корпоративные атаки – 802.1x, EAP, LEAP, PEAP, EAP-TTLS
+Атака на беспроводного клиента – Приманки и атаки на точки доступа, Caffe-Latte, Hirte, сети Ad-Hoc и вирусные SSID, WiFishing
+WPA/WPA2 Handshake (WPA/WPA2)
+PMKID Attack (WPA/WPA2)
+ARP Request Replay Attack (WEP) 
+Hitre Attack (WEP)
+WPS PIN
+4. Wordlists
+5. Post-Exploitation
+6. Evil-Twin
+
 **Атаки которые могут проводиться без подключенных к точке пользователей** - 
 
 - Атаки которые могут проводиться без подключенных к точке пользователей:
@@ -122,6 +136,32 @@ https://attack.mitre.org/techniques/T0860/
 Атака злой двойник» (Evil Twin) - это имитация беспроводной сети, к которой уже есть доверие. И доверие, в этом случае, у пользователей. Таким образом, Evil Twin - это беспроводная социальная атака, беспроводной фишинг, направленный именно на людей, а не на клиентские устройства. Так как не на все сети Wi-Fi можно выполнить ранее описанные атаки, и пароль злоумышленнику тоже удается подобрать далеко не всегда, то можно спросить этот пароль у самих пользователей, которые часто являются самым слабым звеном периметра. В этом случае устройство Pineapple может работать как точка доступа Wi-Fi с тем же именем сети, что и атакуемая. С той лишь разницей, что сеть является открытой. Атака полагается на факт доверия со стороны пользователя к подставной сети. Предполагается, что именно пользователь намеренно подключится к будто бы легальной беспроводной сети и введет пароль, который отправится прямо к злоумышленнику в открытом виде. Чтобы повысить вероятность того, что кто-то из пользователей подключится к подставной сети, устройство Pineapple точно так же, как и в прошлый раз, может отправлять пакеты деаутентификации, отключая всех клиентов от атакуемой беспроводной сети. Для успешности атаки Evil Twin злоумышленнику требуется грамотно решить две задачи: запустить беспроводную сеть с именем, которое точно привлечет внимание людей, и, конечно же, грамотный претекстинг Сарtivе портала. 
 
 ### Пример bruteforce WPA handshake
+
+tshark -r WPA2-PSK-Capture1.cap -Y 'eapol'
+aircrack-ng -w 1000000-password-seclists.txt -e WiFi-wpa -b bssid WPA2-PSK-Capture1.cap
+asleap -C bssid - R bssid -W seclist.txt
+
+Wifi map
+
+https://teletype.in/@r00t_owl/7DwgIB6PbmI
+https://book.hacktricks.xyz/generic-methodologies-and-resources/pentesting-wifi
+https://hackmd.io/@ka0na5hi/HJRaz91Xd
+https://hackware.ru/?p=372
+https://github.com/blaCCkHatHacEEkr/PENTESTING-BIBLE
+https://hackmd.io/kYAqxmOjTE6-UAv6TubiiA
+https://executeatwill.com/2020/01/05/Wireless-Wifi-Penetration-Testing-Hacker-Notes/
+https://uceka.com/2014/05/12/wireless-penetration-testing-cheat-sheet/
+https://www.hackingloops.com/kick-victims-off-of-wireless-networks/
+https://gbhackers.com/wireless-penetration-testing-checklist-a-detailed-cheat-sheet/
+https://github.com/duyetdev/bruteforce-database/blob/master/1000000-password-seclists.txt
+https://github.com/derv82/wifite2
+https://www.freebuf.com/articles/wireless/338334.html
+https://wifigid.ru/besprovodnye-tehnologii/tehnologiya-802-11n-wi-fi-4-tsaritsa-wi-fi
+https://github.com/Mi-Al/WiFi-autopwner
+https://github.com/drygdryg/OneShot
+https://github.com/s0lst1c3/eaphammer
+https://raw.githubusercontent.com/koutto/pi-pwnbox-rogueap/main/mindmap/WiFi-Hacking-MindMap-v1.png
+https://github.com/ivan-sincek/wifi-penetration-testing-cheat-sheet
 
 Наша цель в типовой инфраструктуре - получение доступа к беспроводной сети WiFi
 
