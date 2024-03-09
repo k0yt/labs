@@ -98,7 +98,7 @@ WPS PIN
 	> 4. Realtek
     5. frag
     6. Атаки на пароль: Злоумышленник может использовать словарные атаки, брутфорс атаки или атаки по слабым паролям для получения доступа к точке доступа WiFi
-    7. WPA Handshake/Ьruteforce - атака на аутентификацию точки доступа
+    7. WPA Handshake/Ьruteforce - атака на аутентификацию точки доступа + радужные таблицы
     8. KRack
     9. DragonBlood
  
@@ -141,6 +141,7 @@ tshark -r WPA2-PSK-Capture1.cap -Y 'eapol'
 aircrack-ng -w 1000000-password-seclists.txt -e WiFi-wpa -b bssid WPA2-PSK-Capture1.cap
 asleap -C bssid - R bssid -W seclist.txt
 
+
 Wifi map
 
 https://teletype.in/@r00t_owl/7DwgIB6PbmI
@@ -162,6 +163,16 @@ https://github.com/drygdryg/OneShot
 https://github.com/s0lst1c3/eaphammer
 https://raw.githubusercontent.com/koutto/pi-pwnbox-rogueap/main/mindmap/WiFi-Hacking-MindMap-v1.png
 https://github.com/ivan-sincek/wifi-penetration-testing-cheat-sheet
+
+### Защита
+
+- Использование WPA2/3
+- Мониторинг сети на появление новых сетей и подключение к существующим
+- Отключить WPS
+- Обновить прошивку маршрутизатора
+- Сложные пароли у клиентов
+	> Время брутфорса
+	> ![Alt text](<password_len.png>)
 
 Наша цель в типовой инфраструктуре - получение доступа к беспроводной сети WiFi
 
