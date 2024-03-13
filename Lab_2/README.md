@@ -54,15 +54,55 @@
 	
  	По умолчанию беспроводные адаптеры находятся в «управляемом» (managed) режиме. Этот режим позволяет подключаться к Точке Доступа в качестве обычного Клиента.
 	Режим монитора (monitor) предназначен для анализа Wi-Fi сетей. В этом режиме беспроводная карта принимает фреймы (их ещё называют кадры) от любых источников, находящихся на том же канале.
+
 	Поскольку нам нужно захватить рукопожатие, которое состоит из данных, которые Станция отправляет Точке Доступа и Точка Доступа отправляет Станции (т.е. которые ни на каком этапе не предназначены для нас), то нам необходимо перевести нашу Wi-Fi карту в режим монитора, чтобы она была способна увидеть эти данные и сохранить их для дальнейшей обработки.
-4. Запускаем любой сканер wifi (например wash -i wlan0)
+
+  `sudo iw dev`
+
+  Имя беспроводного интерфейса указано в строке со словом Interface, т.е. `wlan0`. Запоминаем это значение, поскольку в дальнейшем оно нам понадобиться.
+
+  Режим монитора не является чем-то обычным для операционной системы, поэтому некоторые программы без спроса, молча переводят Wi-Fi адаптер в управляемый режим. Нам это может помешать, поэтому следующими двумя командами мы закрываем программы, которые могут нам воспрепятствовать:
+
+  `sudo ip link set wlan0 down`
+
+  `sudo iw wlan0 set monitor control`
+
+  `sudo ip link set wlan0 up`
+
+4. Запускаем любой сканер wifi (например `wash -i wlan0` или `airodump-ng`)
+
+  Будет выведен похожий список сетей:
+
+  ![](1.jpg)
+
+  Когда вы увидите в списке сеть, которую хотите атаковать, то остановите программу, для этого нажмите CTRL+c.
+
 5. Собираем значение BSSID точек доступа
+
+  Предположим, нас интересует сеть с ESSID (именем) dlink. Как видно из скриншота, её характеристиками являются: BSSID – это 00:1E:58:C6:AC:FB, она использует WPA2, работает на шестом канале. Также ненулевое значение #Data (захваченные данные, отправляемые это ТД) позволяет предположить, что к ней подключена одна или более станций.
+
 6. Захват WPA Handshake - одна из самых популярных и широкоприменяемых атак.
+
+  Для захвата рукопожатия используется команда следующего вида: `sudo airodump-ng -c КАНАЛ --bssid MAC_АДРЕС -w ФАЙЛ ИНТЕРФЕЙС` Где:
+  - КАНАЛ – это канал, на котором работает ТД
+  - MAC_АДРЕС – это BSSID атакуемой ТД
+  - ФАЙЛ – имя файла, куда будет записано рукопожатие
+  - ИНТЕРФЕЙС – имя беспроводного интерфейса в режиме монитора
+
+  `sudo airodump-ng -c 6 --bssid 00:1E:58:C6:AC:FB -w capture wlan0`
 	
  	WPA Handshake передается клиентом во втором сообщении (EAPOL М2) четырехступенчатого рукопожатия. Содержимое этого пакета является доказательством для точки доступа, что клиент знает общий ключ РSК. Злоумышленник же, перехватив такой хеш, может подобрать пароль перебором по словарю. Для захвата этого хеша злоумышленнику не обязательно совершать активные действия, но можно ускорить процесс через деаутентификацию клиентов конкретной точки доступа. Рассылка пакетов деаутентификации отправляет от имени клиента и точки доступа всем слышимым клиентам Wi-Fi сети специальные пакеты, закрывающие соединение (деаутентификация). Клиент, который на самом деле не собирался отключаться от точки доступа, выполнит повторное подключение, передав хеш пароля к этой сети. Деаутентификация имеет негативные побочные воздействия на атакуемую сеть - постоянные отключения клиентов.
 	> Стоит упомянуть, что есть вероятность захвата невалидного пароля, который также отправляется в виде пакетов handshake. Но handshake с таким паролем не содержит ответа от точки доступа (EAPOL МЗ), и считается половинчатым (Half-handhake). Чтобы не получить ложного срабатывания, необходимо отбрасывать такие handshakes и оставлять только те, которые имеют подтверждение, а значит, с правильным паролем. 
 
-https://telegra.ph/Vzlom-WiFi-08-17
+  На следующем скриншоте вновь видна интересующая нас ТД, а также теперь виден раздел со станциями:
+
+  ![](2.jpg)
+
+  В полном списке ТД раздел со станциями также присутствовал, но уходил за нижний край экрана, поэтому на скриншот не попал.
+
+  Для станции мы в поле BSSID мы можем увидеть значение, которое соответствует BSSID Точки Доступа, т.е. 00:1E:58:C6:AC:FB, это означает, что в данный момент эта Станция подключена к интересующей нас ТД. Теперь имеется два варианта:
+  1) ждать пока Станция отсоединится и вновь подключится к ТД по естественным причинам
+  2) выполнить атаку деаутентификация для ускорения процесса
 
 ### Общие методы и конкретные способы атак на точку доступа
 
@@ -150,18 +190,20 @@ WEP, TKIP, CCMP, silentbridge, fenrir
 
 1. запускаем сканер wifi   
   
-  wash -i wlan0 
+  `wash -i wlan0`
     
-  выбираем BSSID           
-  начать стоит со сканера сетей с 
+2. выбираем BSSID           
+  
+  начать стоит с сетей, которые 
 
   1. Lck No
   2. меньшим dBm
   3. WPS 1.0
   4. Realtek
 
-  запускаем перебор ключей с необходимым BSSID
-  reaver -i wlan0 -c 2 -b "BSSID" -K -vv --no-nacks -T .5 -d 3 3
+3. запускаем перебор ключей с необходимым BSSID
+
+  `reaver -i wlan0 -c 2 -b "BSSID" -K -vv --no-nacks -T .5 -d 3 3`
 
 
 ### Пример  Evil Тwin
@@ -170,30 +212,9 @@ WEP, TKIP, CCMP, silentbridge, fenrir
 
 ### Пример bruteforce WPA handshake
 
-tshark -r WPA2-PSK-Capture1.cap -Y 'eapol'
-aircrack-ng -w 1000000-password-seclists.txt -e WiFi-wpa -b bssid WPA2-PSK-Capture1.cap
-asleap -C bssid - R bssid -W seclist.txt
-
-
-Wifi map
-
-https://teletype.in/@r00t_owl/7DwgIB6PbmI
-https://book.hacktricks.xyz/generic-methodologies-and-resources/pentesting-wifi
-https://hackmd.io/@ka0na5hi/HJRaz91Xd
-https://hackware.ru/?p=372
-https://github.com/blaCCkHatHacEEkr/PENTESTING-BIBLE
-https://hackmd.io/kYAqxmOjTE6-UAv6TubiiA
-https://executeatwill.com/2020/01/05/Wireless-Wifi-Penetration-Testing-Hacker-Notes/
-https://uceka.com/2014/05/12/wireless-penetration-testing-cheat-sheet/
-https://www.hackingloops.com/kick-victims-off-of-wireless-networks/
-https://gbhackers.com/wireless-penetration-testing-checklist-a-detailed-cheat-sheet/
-https://github.com/duyetdev/bruteforce-database/blob/master/1000000-password-seclists.txt
-https://github.com/derv82/wifite2
-https://www.freebuf.com/articles/wireless/338334.html
-https://wifigid.ru/besprovodnye-tehnologii/tehnologiya-802-11n-wi-fi-4-tsaritsa-wi-fi
-
-https://raw.githubusercontent.com/koutto/pi-pwnbox-rogueap/main/mindmap/WiFi-Hacking-MindMap-v1.png
-https://github.com/ivan-sincek/wifi-penetration-testing-cheat-sheet
+- `tshark -r WPA2-PSK-Capture1.cap -Y 'eapol'`
+- `aircrack-ng -w 1000000-password-seclists.txt WPA2-PSK-Capture1.cap`
+- `asleap -C bssid - R bssid -W seclist.txt`
 
 ### Защита
 
@@ -220,3 +241,25 @@ https://github.com/ivan-sincek/wifi-penetration-testing-cheat-sheet
 
 1. В каких диапазонах работает сеть Wi-Fi?
 2. На каких канал работает сеть Wi-Fi?
+
+## Доп. материалы:
+
+Wifi map
+
+https://teletype.in/@r00t_owl/7DwgIB6PbmI
+https://book.hacktricks.xyz/generic-methodologies-and-resources/pentesting-wifi
+https://hackmd.io/@ka0na5hi/HJRaz91Xd
+https://hackware.ru/?p=372
+https://github.com/blaCCkHatHacEEkr/PENTESTING-BIBLE
+https://hackmd.io/kYAqxmOjTE6-UAv6TubiiA
+https://executeatwill.com/2020/01/05/Wireless-Wifi-Penetration-Testing-Hacker-Notes/
+https://uceka.com/2014/05/12/wireless-penetration-testing-cheat-sheet/
+https://www.hackingloops.com/kick-victims-off-of-wireless-networks/
+https://gbhackers.com/wireless-penetration-testing-checklist-a-detailed-cheat-sheet/
+https://github.com/duyetdev/bruteforce-database/blob/master/1000000-password-seclists.txt
+https://github.com/derv82/wifite2
+https://www.freebuf.com/articles/wireless/338334.html
+https://wifigid.ru/besprovodnye-tehnologii/tehnologiya-802-11n-wi-fi-4-tsaritsa-wi-fi
+
+https://raw.githubusercontent.com/koutto/pi-pwnbox-rogueap/main/mindmap/WiFi-Hacking-MindMap-v1.png
+https://github.com/ivan-sincek/wifi-penetration-testing-cheat-sheet
