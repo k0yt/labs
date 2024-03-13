@@ -30,6 +30,9 @@
 
 ![](4wayshandshake.png)
 
+Перевод на русский
+
+![](4handshake.png)
 
 
 #### Каналы
