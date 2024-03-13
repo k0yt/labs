@@ -226,22 +226,23 @@ https://attack.mitre.org/techniques/T0860/
 
 ## Доп. материалы:
 
+
+
+- https://teletype.in/@r00t_owl/7DwgIB6PbmI
+- https://book.hacktricks.xyz/generic-methodologies-and-resources/pentesting-wifi
+- https://hackmd.io/@ka0na5hi/HJRaz91Xd
+- https://hackware.ru/?p=372
+- https://github.com/blaCCkHatHacEEkr/PENTESTING-BIBLE
+- https://hackmd.io/kYAqxmOjTE6-UAv6TubiiA
+- https://executeatwill.com/2020/01/05/Wireless-Wifi-Penetration-Testing-Hacker-Notes/
+- https://uceka.com/2014/05/12/wireless-penetration-testing-cheat-sheet/
+- https://www.hackingloops.com/kick-victims-off-of-wireless-networks/
+- https://gbhackers.com/wireless-penetration-testing-checklist-a-detailed-cheat-sheet/
+- https://github.com/duyetdev/bruteforce-database/blob/master/1000000-password-seclists.txt
+- https://github.com/derv82/wifite2
+- https://www.freebuf.com/articles/wireless/338334.html
+- https://wifigid.ru/besprovodnye-tehnologii/tehnologiya-802-11n-wi-fi-4-tsaritsa-wi-fi
+
 Wifi map
-
-https://teletype.in/@r00t_owl/7DwgIB6PbmI
-https://book.hacktricks.xyz/generic-methodologies-and-resources/pentesting-wifi
-https://hackmd.io/@ka0na5hi/HJRaz91Xd
-https://hackware.ru/?p=372
-https://github.com/blaCCkHatHacEEkr/PENTESTING-BIBLE
-https://hackmd.io/kYAqxmOjTE6-UAv6TubiiA
-https://executeatwill.com/2020/01/05/Wireless-Wifi-Penetration-Testing-Hacker-Notes/
-https://uceka.com/2014/05/12/wireless-penetration-testing-cheat-sheet/
-https://www.hackingloops.com/kick-victims-off-of-wireless-networks/
-https://gbhackers.com/wireless-penetration-testing-checklist-a-detailed-cheat-sheet/
-https://github.com/duyetdev/bruteforce-database/blob/master/1000000-password-seclists.txt
-https://github.com/derv82/wifite2
-https://www.freebuf.com/articles/wireless/338334.html
-https://wifigid.ru/besprovodnye-tehnologii/tehnologiya-802-11n-wi-fi-4-tsaritsa-wi-fi
-
-https://raw.githubusercontent.com/koutto/pi-pwnbox-rogueap/main/mindmap/WiFi-Hacking-MindMap-v1.png
-https://github.com/ivan-sincek/wifi-penetration-testing-cheat-sheet
+- https://raw.githubusercontent.com/koutto/pi-pwnbox-rogueap/main/mindmap/WiFi-Hacking-MindMap-v1.png
+- https://github.com/ivan-sincek/wifi-penetration-testing-cheat-sheet
