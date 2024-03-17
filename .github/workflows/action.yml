@@ -17,7 +17,8 @@ jobs:
             fi
             files=$(printf '"%s" ' $dir/*.md)
             docker run --rm -v $PWD:/data rstropek/pandoc-latex --pdf-engine=xelatex -f markdown --template https://raw.githubusercontent.com/k0yt/my-pandoc-latex-template/main/my-template.tex -V linkcolor:blue -V disable-header-and-footer:True -t latex --output=/data/output/"$dir_name".pdf $files
-          done- uses: actions/upload-artifact@v3
+          done
+      - uses: actions/upload-artifact@v3
         with:
           name: output
           path: output
