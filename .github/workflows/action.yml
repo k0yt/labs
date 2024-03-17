@@ -7,22 +7,20 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
-      #- name: create file list
-      #  id: files_list
-      #  run: |
-      #    mkdir output  
-      #    echo "files=$(printf '"%s" ' *.md)" > $GITHUB_OUTPUT
       - name: Generate list of Markdown files
         run: |
           mkdir -p output
           find . -type f -name '*.md' -not -path './output/*' > md_files_list.txt
+
       - uses: actions/upload-artifact@v3
         with:
           name: md-files-list
           path: md_files_list.txt
+
       - uses: actions/download-artifact@v3
         with:
           name: md-files-list
+
       - name: Convert Markdown to PDF
         run: |
           docker pull rstropek/pandoc-latex
@@ -32,21 +30,22 @@ jobs:
             [ "$base_name" = "." ] && base_name="Intro"
             docker run --rm -v $PWD:/data rstropek/pandoc-latex "$line" --pdf-engine=xelatex -f gfm+rebase_relative_paths --template https://raw.githubusercontent.com/k0yt/my-pandoc-latex-template/main/my-template.tex -V linkcolor:blue -V disable-header-and-footer:True -t latex -o "./output/${base_name}.pdf"
           done < md_files_list.txt      
+
       - uses: actions/upload-artifact@v3
         with:
           name: output
           path: output
 
-    - name: Commit files
-      run: |
-        git config --local user.email ${{ secrets.GIT_EMAIL }}
-        git config --local user.name ${{ secrets.GIT_NAME }}
-        git commit -am "Upload PDFs"
+      - name: Commit files
+        run: |
+          git config --local user.email ${{ secrets.GIT_EMAIL }}
+          git config --local user.name ${{ secrets.GIT_NAME }}
+          git commit -am "Upload PDFs"
 
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: main
-      env:
-        CI: true
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
+        env:
+          CI: true
