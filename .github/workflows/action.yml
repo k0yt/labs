@@ -19,8 +19,6 @@ jobs:
         with:
           args: --pdf-engine=xelatex \
                 --highlight-style kate \
-                --table-of-contents \
-                --number-sections \
                 --output=output/result.pdf ${{ steps.files_list.outputs.files }}
       - uses: actions/upload-artifact@v3
         with:
