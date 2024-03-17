@@ -7,22 +7,17 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
-      - name: create file list
-        id: files_list
+      - name: create file list and convert
         run: |
-          mkdir output  
-          echo "files=$(printf '"%s" ' *.md)" > $GITHUB_OUTPUT
-      - uses: docker://rstropek/pandoc-latex
-        with:
-          args: >-
-            --pdf-engine=xelatex 
-            -f markdown 
-            --template https://raw.githubusercontent.com/k0yt/my-pandoc-latex-template/main/my-template.tex 
-            -V linkcolor:blue 
-            -V disable-header-and-footer:True 
-            -t latex 
-            --output=output/result.pdf ${{ steps.files_list.outputs.files }}
-      - uses: actions/upload-artifact@v3
+          mkdir -p output
+          find . -name '*.md' -not -path './output/*' | sed 's|/[^/]*$||' | sort -u | while read dir; do
+            dir_name=$(basename "$dir")
+            if [ "$dir_name" = "." ]; then
+              dir_name="root"
+            fi
+            files=$(printf '"%s" ' $dir/*.md)
+            docker run --rm -v $PWD:/data rstropek/pandoc-latex --pdf-engine=xelatex -f markdown --template https://raw.githubusercontent.com/k0yt/my-pandoc-latex-template/main/my-template.tex -V linkcolor:blue -V disable-header-and-footer:True -t latex --output=/data/output/"$dir_name".pdf $files
+          done- uses: actions/upload-artifact@v3
         with:
           name: output
           path: output
