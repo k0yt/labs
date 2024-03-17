@@ -10,12 +10,15 @@ jobs:
       - name: create file list and convert
         run: |
           mkdir -p output
-          find . -name '*.md' -not -path './output/*' | sed 's|/[^/]*$||' | sort -u | while read dir; do
-            dir_name=$(basename "$dir")
-            if [ "$dir_name" = "." ]; then
-              dir_name="root"
+          find . -type f -name '*.md' -not -path './output/*' -exec dirname {} \; | sort -u | while read dir; do
+            files=$(find "$dir" -maxdepth 1 -type f -name "*.md" -print0 | xargs -0 printf '"%s" ')
+            if [ -z "$files" ]; then
+              echo "No markdown files found in $dir, skipping..."
+              continue
             fi
-            files=$(printf '"%s" ' $dir/*.md)
+            dir_name=$(basename "$dir")
+            [ "$dir_name" = "." ] && dir_name="root"
+            echo "Converting files in $dir to $dir_name.pdf"
             docker run --rm -v $PWD:/data rstropek/pandoc-latex --pdf-engine=xelatex -f markdown --template https://raw.githubusercontent.com/k0yt/my-pandoc-latex-template/main/my-template.tex -V linkcolor:blue -V disable-header-and-footer:True -t latex --output=/data/output/"$dir_name".pdf $files
           done
       - uses: actions/upload-artifact@v3
