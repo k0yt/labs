@@ -9,8 +9,8 @@ jobs:
       - uses: actions/checkout@v3
       - name: Generate list of Markdown files
         run: |
-          mkdir -p output
-          find . -type f -name '*.md' -not -path './output/*' > md_files_list.txt
+          mkdir -p PDFs
+          find . -type f -name '*.md' -not -path './PDFs/*' > md_files_list.txt
 
       - uses: actions/upload-artifact@v3
         with:
@@ -28,18 +28,19 @@ jobs:
             dir_name=$(dirname "$line")
             base_name=$(basename "$dir_name")
             [ "$base_name" = "." ] && base_name="Intro"
-            docker run --rm -v $PWD:/data rstropek/pandoc-latex "$line" --pdf-engine=xelatex -f gfm+rebase_relative_paths --template https://raw.githubusercontent.com/k0yt/my-pandoc-latex-template/main/my-template.tex -V linkcolor:blue -V disable-header-and-footer:True -t latex -o "./output/${base_name}.pdf"
+            docker run --rm -v $PWD:/data rstropek/pandoc-latex "$line" --pdf-engine=xelatex -f gfm+rebase_relative_paths --template https://raw.githubusercontent.com/k0yt/my-pandoc-latex-template/main/my-template.tex -V linkcolor:blue -V disable-header-and-footer:True -t latex -o "./PDFs/${base_name}.pdf"
           done < md_files_list.txt      
 
       - uses: actions/upload-artifact@v3
         with:
-          name: output
-          path: output
+          name: PDFs
+          path: PDFs
 
       - name: Commit files
         run: |
           git config --local user.email ${{ secrets.GIT_EMAIL }}
           git config --local user.name ${{ secrets.GIT_NAME }}
+          git add PDFs/
           git commit -am "Upload PDFs"
 
       - name: Push changes
