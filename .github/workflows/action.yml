@@ -14,9 +14,14 @@ jobs:
           mkdir output  # create output dir
           # this will also include README.md
           echo "files=$(printf '"%s" ' *.md)" > $GITHUB_OUTPUT
-      - uses: docker://pandoc/latex:2.9
+#      - uses: docker://pandoc/latex:2.9
+      - uses: docker://rstropek/pandoc-latex
         with:
-          args: --variable mainfont="Palatino" --variable sansfont="Helvetica" --variable monofont="Menlo" --variable fontsize=12pt --variable version=2.0 --pdf-engine=xelatex --highlight-style kate --output=output/result.pdf ${{ steps.files_list.outputs.files }}
+#          args: --pdf-engine=xelatex --highlight-style kate --output=output/result.pdf ${{ steps.files_list.outputs.files }}
+          args: -f markdown \
+                --template https://raw.githubusercontent.com/Wandmalfarbe/pandoc-latex-template/v2.0.0/eisvogel.tex \
+                -t latex \
+                --output=output/result.pdf ${{ steps.files_list.outputs.files }}
       - uses: actions/upload-artifact@v3
         with:
           name: output
