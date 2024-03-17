@@ -11,15 +11,12 @@ jobs:
         id: files_list
         run: |
           echo "Lorem ipsum" > lorem_1.md  # create two example files
-          echo "dolor sit amet" > lorem_2.md
           mkdir output  # create output dir
           # this will also include README.md
           echo "files=$(printf '"%s" ' *.md)" > $GITHUB_OUTPUT
       - uses: docker://pandoc/latex:2.9
         with:
-          args: --pdf-engine=xelatex \
-                --highlight-style kate \
-                --output=output/result.pdf ${{ steps.files_list.outputs.files }}
+          args: --pdf-engine=xelatex --highlight-style kate --output=output/result.pdf ${{ steps.files_list.outputs.files }}
       - uses: actions/upload-artifact@v3
         with:
           name: output
