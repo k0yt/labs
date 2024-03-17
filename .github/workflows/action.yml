@@ -20,7 +20,7 @@ jobs:
       - uses: docker://rstropek/pandoc-latex
         with:
 #          args: --pdf-engine=xelatex -f markdown --template https://raw.githubusercontent.com/Wandmalfarbe/pandoc-latex-template/v2.0.0/eisvogel.tex -t latex --output=output/result.pdf ${{ steps.files_list.outputs.files }}
-          args: --pdf-engine=xelatex -f gfm -H quote.tex -V linkcolor:blue -t latex --output=output/result.pdf ${{ steps.files_list.outputs.files }}
+          args: --pdf-engine=xelatex -f gfm --toc --include-in-header titlesec.tex -V linkcolor:blue -t latex --output=output/result.pdf ${{ steps.files_list.outputs.files }}
       - uses: actions/upload-artifact@v3
         with:
           name: output
