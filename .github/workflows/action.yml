@@ -10,18 +10,17 @@ jobs:
       - name: create file list
         id: files_list
         run: |
-          echo "usepackage{tcolorbox}" > quote.tex
-          echo "newtcolorbox{myquote}{colback=red!5!white, colframe=red!75!black}" >> quote.tex
-          echo "renewenvironment{quote}{\begin{myquote}}{\end{myquote}}" >> quote.tex
+          echo "\usepackage{tcolorbox}" > quote.tex
+          echo "\newtcolorbox{myquote}{colback=red!5!white, colframe=red!75!black}" >> quote.tex
+          echo "\renewenvironment{quote}{\begin{myquote}}{\end{myquote}}" >> quote.tex
           cat quote.tex
-          echo "usepackage{titlesec}" > titlesec.tex
-          echo "newcommand{\sectionbreak}{\clearpage}" >> titlesec.tex
           mkdir output  
           echo "files=$(printf '"%s" ' *.md)" > $GITHUB_OUTPUT
+#      - uses: docker://rstropek/pandoc-latex
       - uses: docker://rstropek/pandoc-latex
         with:
 #          args: --pdf-engine=xelatex -f markdown --template https://raw.githubusercontent.com/Wandmalfarbe/pandoc-latex-template/v2.0.0/eisvogel.tex -t latex --output=output/result.pdf ${{ steps.files_list.outputs.files }}
-          args: --pdf-engine=xelatex -f gfm --toc --include-in-header titlesec.tex -V linkcolor:blue -t latex --output=output/result.pdf ${{ steps.files_list.outputs.files }}
+          args: --pdf-engine=xelatex -f gfm -V linkcolor:blue -t latex --output=output/result.pdf ${{ steps.files_list.outputs.files }}
       - uses: actions/upload-artifact@v3
         with:
           name: output
