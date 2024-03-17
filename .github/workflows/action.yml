@@ -14,7 +14,7 @@ jobs:
           echo "files=$(printf '"%s" ' *.md)" > $GITHUB_OUTPUT
       - uses: docker://rstropek/pandoc-latex
         with:
-          args: --pdf-engine=xelatex -f markdown --template https://raw.githubusercontent.com/k0yt/my-pandoc-latex-template/main/my-template.tex -V disable-header-and-footer:True -t latex --output=output/result.pdf ${{ steps.files_list.outputs.files }}
+          args: --pdf-engine=xelatex -f markdown --template https://raw.githubusercontent.com/k0yt/my-pandoc-latex-template/main/my-template.tex -V linkcolor:blue -V disable-header-and-footer:True -t latex --output=output/result.pdf ${{ steps.files_list.outputs.files }}
       - uses: actions/upload-artifact@v3
         with:
           name: output
