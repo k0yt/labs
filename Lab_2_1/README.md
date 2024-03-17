@@ -1,4 +1,4 @@
-# Lab_2 Атака на беспроводные сети WiFi 802.11
+# Задание 2.1 Атака на беспроводные сети WiFi 802.11
 
 ### Основные понятия
 
@@ -212,6 +212,9 @@ https://attack.mitre.org/techniques/T0860/
 
 # Задание
 
+
+> Story: Вы составили словари паролей и решили проверить один из векторов проникновения во внутреннюю сеть - через Wi-Fi. По техническим причинам, в этом курсе мы не можем с вами провести атаку на настоящую точку доступа и снять трафик. Это несложная операция - достаточно находиться в зоне доступа ТД. Поэтому для вас уже есть готовый дамп сети, вы найдете его в папке с практикой.
+
 1. Провести анализ дампов сети pcap и найти подходящий для атаки `bruteforce WPA handshake по словарю` из найденных в открытых источника данных о сотрудниках.
 2. Достать из pcap настоящий пароль
 3. Дополнить отчет, где указать использованные подходы и затронутые угрозы безопасности. Отчет должен содержать название уязвимости, описание уязвимости, пример её эксплуатации, рекомендации к устранению. Указать найденный пароль. 
@@ -223,14 +226,15 @@ https://attack.mitre.org/techniques/T0860/
 
 ## Доп. материалы:
 
-
-
+- https://habr.com/ru/articles/762232/
+- https://habr.com/ru/articles/506812/
 - https://teletype.in/@r00t_owl/7DwgIB6PbmI
 - https://book.hacktricks.xyz/generic-methodologies-and-resources/pentesting-wifi
 - https://hackmd.io/@ka0na5hi/HJRaz91Xd
 - https://hackware.ru/?p=372
 - https://github.com/blaCCkHatHacEEkr/PENTESTING-BIBLE
 - https://hackmd.io/kYAqxmOjTE6-UAv6TubiiA
+- https://codeby.net/threads/kak-stat-guru-ili-wifi-cheat-sheet.82346/
 - https://executeatwill.com/2020/01/05/Wireless-Wifi-Penetration-Testing-Hacker-Notes/
 - https://uceka.com/2014/05/12/wireless-penetration-testing-cheat-sheet/
 - https://www.hackingloops.com/kick-victims-off-of-wireless-networks/
