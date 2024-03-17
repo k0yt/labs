@@ -10,13 +10,11 @@ jobs:
       - name: create file list
         id: files_list
         run: |
-          touch quote.tex
           echo "\usepackage{tcolorbox}" > quote.tex
-          echo "\newtcolorbox{myquote}{colback=red!5!white, colframe=red!75!black}" > quote.tex
-          echo "\renewenvironment{quote}{\begin{myquote}}{\end{myquote}}" > quote.tex
+          echo "\newtcolorbox{myquote}{colback=red!5!white, colframe=red!75!black}" >> quote.tex
+          echo "\renewenvironment{quote}{\begin{myquote}}{\end{myquote}}" >> quote.tex
           cat quote.tex
-          mkdir output  # create output dir
-          # this will also include README.md
+          mkdir output  
           echo "files=$(printf '"%s" ' *.md)" > $GITHUB_OUTPUT
       - uses: docker://rstropek/pandoc-latex
         with:
