@@ -23,7 +23,6 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: md-files-list
-      #- uses: docker://rstropek/pandoc-latex
       - name: Convert Markdown to PDF
         run: |
           docker pull rstropek/pandoc-latex
