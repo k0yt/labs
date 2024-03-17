@@ -10,14 +10,15 @@ jobs:
       - name: create file list
         id: files_list
         run: |
-          echo "Lorem ipsum" > lorem_1.md  # create two example files
-          echo "dolor sit amet" > lorem_2.md
-          mkdir output  # create output dir
-          # this will also include README.md
+          mkdir output  
           echo "files=$(printf '"%s" ' *.md)" > $GITHUB_OUTPUT
       - uses: docker://pandoc/latex:2.9
         with:
-          args: --pdf-engine=xelatex --output=output/result.pdf ${{ steps.files_list.outputs.files }}
+          args: --pdf-engine=xelatex \
+                --highlight-style kate \
+                --table-of-contents \
+                --number-sections \
+                --output=output/result.pdf ${{ steps.files_list.outputs.files }}
       - uses: actions/upload-artifact@v3
         with:
           name: output
@@ -27,7 +28,7 @@ jobs:
 #      run: |
 #        git config --local user.email ${{ secrets.GIT_EMAIL }}
 #        git config --local user.name ${{ secrets.GIT_NAME }}
-#        git commit -am "Updated Channels"
+#        git commit -am "Upload PDFs"
 #
 #    - name: Push changes
 #      uses: ad-m/github-push-action@master
