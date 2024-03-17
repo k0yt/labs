@@ -7,20 +7,31 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
-      - name: create file list and convert
+      #- name: create file list
+      #  id: files_list
+      #  run: |
+      #    mkdir output  
+      #    echo "files=$(printf '"%s" ' *.md)" > $GITHUB_OUTPUT
+      - name: Generate list of Markdown files
         run: |
           mkdir -p output
-          find . -type f -name '*.md' -not -path './output/*' -exec dirname {} \; | sort -u | while read dir; do
-            files=$(find "$dir" -maxdepth 1 -type f -name "*.md" -print0 | xargs -0 printf '"%s" ')
-            if [ -z "$files" ]; then
-              echo "No markdown files found in $dir, skipping..."
-              continue
-            fi
-            dir_name=$(basename "$dir")
-            [ "$dir_name" = "." ] && dir_name="root"
-            echo "Converting files in $dir to $dir_name.pdf"
-            docker run --rm -v $PWD:/data rstropek/pandoc-latex --pdf-engine=xelatex -f markdown --template https://raw.githubusercontent.com/k0yt/my-pandoc-latex-template/main/my-template.tex -V linkcolor:blue -V disable-header-and-footer:True -t latex --output=/data/output/"$dir_name".pdf $files
-          done
+          find . -type f -name '*.md' -not -path './output/*' > md_files_list.txt
+      - uses: actions/upload-artifact@v3
+        with:
+          name: md-files-list
+          path: md_files_list.txt
+      - uses: actions/download-artifact@v3
+        with:
+          name: md-files-list
+      - uses: docker://rstropek/pandoc-latex
+      - name: Convert Markdown to PDF
+        run: |
+          while IFS= read -r line; do
+            dir_name=$(dirname "$line")
+            base_name=$(basename "$dir_name")
+            [ "$base_name" = "." ] && base_name="root"
+            pandoc "$line" --pdf-engine=xelatex -f markdown --template https://raw.githubusercontent.com/k0yt/my-pandoc-latex-template/main/my-template.tex -V linkcolor:blue -V disable-header-and-footer:True -t latex -o "./output/${base_name}.pdf"
+          done < md_files_list.txt      
       - uses: actions/upload-artifact@v3
         with:
           name: output
