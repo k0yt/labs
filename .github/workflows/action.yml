@@ -10,16 +10,11 @@ jobs:
       - name: create file list
         id: files_list
         run: |
-          echo "\usepackage{tcolorbox}" > quote.tex
-          echo "\newtcolorbox{myquote}{colback=red!5!white, colframe=red!75!black}" >> quote.tex
-          echo "\renewenvironment{quote}{\begin{myquote}}{\end{myquote}}" >> quote.tex
-          cat quote.tex
           mkdir output  
           echo "files=$(printf '"%s" ' *.md)" > $GITHUB_OUTPUT
-#      - uses: docker://rstropek/pandoc-latex
       - uses: docker://rstropek/pandoc-latex
         with:
-          args: --pdf-engine=xelatex -f markdown --template https://raw.githubusercontent.com/k0yt/my-pandoc-latex-template/main/my-template.tex -V linkcolor:blue -t latex --output=output/result.pdf ${{ steps.files_list.outputs.files }}
+          args: --pdf-engine=xelatex -f markdown --template https://raw.githubusercontent.com/k0yt/my-pandoc-latex-template/main/my-template.tex -V linkcolor:blue disable-header-and-footer:True -t latex --output=output/result.pdf ${{ steps.files_list.outputs.files }}
       - uses: actions/upload-artifact@v3
         with:
           name: output
