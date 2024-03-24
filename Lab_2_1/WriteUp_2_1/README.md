@@ -1,3 +1,4 @@
-# WriteUp_Lab_2 
+
+Перебор паролей по словарю -w pass.txt
 
 aircrack-ng -w pass.txt handshake2.cap 

@@ -1,17 +1,17 @@
-# WriteUp_Lab_1 Поиск сотрудника на сайте в открытой сети
+Поиск сотрудника на сайте в открытой сети
 
 1. Разведка по сайту codovix.ru -> Найдена "интересная" информация по пользователям
    
-> ![image](https://github.com/k0yt/labs/assets/114695070/0134d272-147f-4f6b-bb3b-9e6d34e7b57f)
+	![](https://github.com/k0yt/labs/assets/114695070/0134d272-147f-4f6b-bb3b-9e6d34e7b57f)
 
 
 2. Составление 2 словарей паролей. На словарик имеется 10 слов, необходимо составить список паролей в которых используется 5 слов в разном порядке
 
-> Можно использовать утилиты crunch, combinanor.bin, написать свой скрипт, взять чужой [1](https://github.com/Bitwise-01/Passwords/tree/master), [2](https://github.com/cycurity/wister) или собрать словарь руками :)
-> 
-> Пример `crunch 1 1 -p Alex Company Position`
-> 
-> ![image](https://github.com/k0yt/labs/assets/114695070/037c7bc9-f212-4e8a-9e11-924307c55182)
+	Можно использовать утилиты crunch, combinanor.bin, написать свой скрипт, взять чужой [1](https://github.com/Bitwise-01/Passwords/tree/master), [2](https://github.com/cycurity/wister) или собрать словарь руками :)
+
+	Пример `crunch 1 1 -p Alex Company Position`
+
+	![](https://github.com/k0yt/labs/assets/114695070/037c7bc9-f212-4e8a-9e11-924307c55182)
 
 3. Отчет должен содержать название уязвимости, cvss вектор, описание уязвимости, пример её эксплуатации, рекомендации к устранению
 
