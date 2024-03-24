@@ -28,7 +28,7 @@ jobs:
             dir_name=$(dirname "$line")
             base_name=$(basename "$dir_name")
             [ "$base_name" = "." ] && base_name="Intro"
-            docker run --rm -v $PWD:/data rstropek/pandoc-latex "$line" --pdf-engine=xelatex --highlight-style=tango --table-of-contents -f gfm+rebase_relative_paths --template https://raw.githubusercontent.com/k0yt/my-pandoc-latex-template/main/my-template.tex -V linkcolor:blue -V disable-header-and-footer:True -t latex -o "./PDFs/${base_name}.pdf"
+            docker run --rm -v $PWD:/data rstropek/pandoc-latex "$line" --pdf-engine=xelatex --highlight-style=tango --table-of-contents -f markdown+rebase_relative_paths --template https://raw.githubusercontent.com/k0yt/my-pandoc-latex-template/main/my-template.tex -V linkcolor:blue -V disable-header-and-footer:True -t latex -o "./PDFs/${base_name}.pdf"
           done < md_files_list.txt      
 
       - uses: actions/upload-artifact@v3
